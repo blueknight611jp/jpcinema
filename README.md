@@ -1,0 +1,4 @@
+jpcinema
+========
+
+scraper for allcinema
