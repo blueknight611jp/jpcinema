@@ -31,10 +31,7 @@
         
    </GetSearchResults>
         
-        
-        <!--
-        <title lang="ja">映画 空の王者 - allcinema</title><meta name="keywords" lang="ja" content="空の王者,映画" /><meta name="description" lang="ja" content="映画「空の王者」
-        -->
+
         
 	<GetDetails dest="4">
 		<RegExp input="$$8" output="&lt;details&gt;\1&lt;/details&gt;" dest="4">
@@ -42,17 +39,36 @@
 				<expression>&lt;title lang=&quot;ja&quot;&gt;.*?\s(.*?)\s-\sallcinema&lt;/title&gt;</expression>
 			</RegExp>
             
-            <!-- <td><a href='theater.php?sYear=2013&sMonth=03'>2013/03</a> -->
             <RegExp input="$$1" output="&lt;year&gt;\1&lt;/year&gt;" dest="8+">
                 <expression>&lt;a href=&apos;theater.php\?sYear=([0-9]{4})</expression>
             </RegExp>
             
-			<RegExp input="$$1" output="&lt;thumb&gt;\1/popu/1.jpg&lt;/thumb&gt;&lt;thumb&gt;\1/popu/2.jpg&lt;/thumb&gt;&lt;thumb&gt;\1/popu/3.jpg&lt;/thumb&gt;&lt;thumb&gt;\1/thum_b.jpg&lt;/thumb&gt;&lt;fanart&gt;&lt;thumb&gt;\1str.jpg&lt;/thumb&gt;&lt;/fanart&gt;" dest="8+">
-				<expression>(http://www.1pondo.tv/moviepages/[0-9]{6}_[0-9]{3}/images/)thum_b.jpg</expression>
+            <!-- <tr><td>監督：</td><td><a href="show_p.php?num_p=4971">ロバート・ゼメキス</a></td><td></td></tr> -->
+            <RegExp input="$$1" output="&lt;director&gt;\1&lt;/director&gt;" dest="8+">
+                <expression>&lt;td&gt;監督：&lt;.*?&gt;(.*?)&lt;/a&gt;</expression>
+            </RegExp>
+            
+            <!-- <span class="catch_copy">彼は<br />英雄（ヒーロー）か<br />犯罪者か</span> -->
+            <RegExp input="$$1" output="&lt;tagline&gt;\1&lt;/tagline&gt;" dest="8+">
+                <expression>class=&quot;catch_copy&quot;&gt;(.*?)&lt;/span&gt;</expression>
+            </RegExp>       
+            
+            <!-- <td class="fwb">上映時間</td><td>138分</td> -->
+            <RegExp input="$$1" output="&lt;runtime&gt;\1&lt;/runtime&gt;" dest="8+">
+                <expression>上映時間.*?([0-9]*)分&lt;</expression>
+            </RegExp>           
+            
+            <!-- stealMain"><img src='http://ecx.images-amazon.com/images/I/51A6epIedZL._SL160_.jpg' border -->
+            <!-- http://www.allcinema.net/prog/image_large.php?i=343694&t=0&im=29513&nm=%25A5%25D5%25A5%25E9%25A5%25A4%25A5%25C8 -->
+            
+			<RegExp input="$$1" output="&lt;thumb&gt;\1&lt;/thumb&gt;" dest="8+">
+				<expression>stealMain&quot;&gt;&lt;img src=&apos;(.*?)&apos;</expression>
 			</RegExp>
+            
 			<RegExp input="$$1" output="&lt;studio&gt;dummy&lt;/studio&gt;" dest="8+">
 				<expression />
 			</RegExp>
+            
 			<RegExp input="$$1" output="&lt;actor&gt;&lt;thumb spoof=&quot;http://www.1pondo.tv&quot;&gt;\1&lt;/thumb&gt;&lt;name&gt;\2&lt;/name&gt;&lt;/actor&gt;" dest="8+">
 				<expression>(http://www.1pondo.tv/moviepages/[0-9]{6}_[0-9]{3}/images/thum_b.jpg).*?&lt;h2&gt;(.*?)&lt;/h2&gt;</expression>
 			</RegExp>
