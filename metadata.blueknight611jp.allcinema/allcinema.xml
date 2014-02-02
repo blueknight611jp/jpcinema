@@ -14,16 +14,18 @@
         
     
     <GetSearchResults clearbuffers="no" dest="8">
-        <!-- searchした結果は 1: 単独の映画情報そのもののページ　2: 検索でヒットしたリストを含むページ の二通りがある -->
+        <!-- searchした結果は 1: 単独の映画情報そのもののページ　2: 一致したリストを含むページ 二通りがある -->
         <!-- 単独の映画情報のページの場合は、keyidで映画idを得て、映画情報のページを示すurlを得る -->
         <!-- http://www.allcinema.net/prog/show_c.php?num_c=21943 -->
         <RegExp input="$$1" output="&lt;?xml version=&quot;1.01&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;results&gt;&lt;entity&gt;&lt;title&gt;\1&lt;/title&gt;&lt;url&gt;http://www.allcinema.net/prog/show_c.php?num_c=\2&lt;/url&gt;&lt;/entity&gt;&lt;/results&gt;" dest="8">
             <expression>&lt;h1 class=&quot;title&quot;&gt;(.*?)&lt;span.*?keyid=([0-9]+)</expression>
         </RegExp>
         
-        <!-- 検索でヒットしたリストを含むページの場合は完全一致の部分に限定した後、リストかr映画idを得て それぞれのurlを得る -->
+
+        
+        <!-- 一致したリストを含むページの場合は完全一致の部分に限定した後、リストかr映画idを得て それぞれのurlを得る -->
         <RegExp input="$$1" output="\1" dest="5">
-            <expression trim="1" noclean="1">search-bar-kz\.gif(.*?)search-bar-bb\.gif</expression>
+            <expression trim="1" noclean="1">caption-4(.*?)caption-8</expression>
         </RegExp>
         
         <RegExp input="$$6" output="&lt;?xml version=&quot;1.02&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;results&gt;\1&lt;/results&gt;" dest="8+">
@@ -34,8 +36,9 @@
             <expression noclean="1"></expression>
         </RegExp>
         
-       
         
+      
+      
    </GetSearchResults>
         
 
